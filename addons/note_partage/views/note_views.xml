@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Action pour ouvrir les notes partagées -->
+    <record id="action_note_partage" model="ir.actions.act_window">
+        <field name="name">Gestion des notes internes</field>
+        <field name="res_model">note.partage</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu principal -->
+    <menuitem id="menu_note_root" name="Gestion des notes internes" sequence="10"/>
+    
+    <!-- Sous-menu -->
+    <menuitem id="menu_note_partage"
+        name="Notes"
+        parent="menu_note_root"
+        action="action_note_partage"
+        sequence="10"/>
+    
+    <!-- Vue liste -->
+    <record id="view_note_partage_tree" model="ir.ui.view">
+        <field name="name">note.partage.tree</field>
+        <field name="model">note.partage</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="auteur"/>
+                <field name="date_creation"/>
+                <field name="statut"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue formulaire -->
+    <record id="view_note_partage_form" model="ir.ui.view">
+        <field name="name">note.partage.form</field>
+        <field name="model">note.partage</field>
+        <field name="arch" type="xml">
+            <form string="Gestion des notes internes">
+                <header>
+                    <field name="statut" widget="statusbar" statusbar_visible="brouillon,partage,termine"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Titre de la note"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="auteur"/>
+                        </group>
+                        <group>
+                            <field name="date_creation"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Contenu">
+                            <field name="contenu" nolabel="1" widget="html"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
